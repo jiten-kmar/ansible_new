@@ -1,0 +1,17 @@
+ansible -i dev --list-hosts all
+ansible  -i dev --list-hosts all
+ansible  -i dev --list-hosts webserver
+ansible  -i dev --list-hosts \!webserver
+ansible  -i dev --list-hosts control
+
+ansible -m ping all
+ansible -m command -a "hostname" all ->>> run the hostname command on all boxes under system
+
+ansible -a "hostname" all	
+ansible -a "ls /tmp" all
+ansible -a "mkdir /tmp/abc1234" all
+ansible -a "rm -rf /tmp/abc1234" all
+ansible-playbook playbooks/hostname.yml 
+
+URL for further study
+http://docs.ansible.com/ansible/latest/intro_patterns.html
