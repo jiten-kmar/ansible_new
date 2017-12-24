@@ -2,5 +2,5 @@
 ####Check the hostname of all the hostname of inventories ##
  - hosts: all
    tasks: 
-     - command: hostname
-
+     - name: "get the hostnames of all machines under inventory"
+       command: hostname
