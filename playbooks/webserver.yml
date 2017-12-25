@@ -17,6 +17,18 @@
       apache2_module: state=present name=wsgi
       notify: restart apache2
 
+    - name: copy demo application code
+      copy: src=/u01/ansible_project/ansible_new/demo/app/ dest=/var/www/demo mode=0755
+      notify: restart apache2
+
+    - name: copy apache virtual host config
+      copy: src=/u01/ansible_project/ansible_new/demo/demo.conf dest=/etc/apache2/sites-available mode=0755
+      notify: restart apache2
+
+    - name: setup pip virtualenv
+      pip: requirements=/var/www/demo/requirements.txt virtualenv=/var/www/demo/.venv
+      notify: restart apache2
+
   handlers:
     - name: restart apache2
       service: name=apache2 state=restarted
