@@ -1,0 +1,27 @@
+---
+# Bring down entire stack, first lb, then webserver and then restart DB
+# once DB is restarted, start webserver and then lb
+- hosts: ansible-lb
+  become: true
+  tasks:
+    - service: name=nginx state=stopped
+
+- hosts: ansible-webserver
+  become: true
+  tasks:
+    - service: name=apache2 state=stopped
+ 
+- hosts: ansible-db
+  become: true
+  tasks:
+    - service: name=mysql state=restarted
+ 
+- hosts: ansible-webserver
+  become: true
+  tasks:
+    - service: name=apache2 state=started
+
+- hosts: ansible-lb
+  become: true
+  tasks: 
+    - service: name=nginx state=started
