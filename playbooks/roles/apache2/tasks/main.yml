@@ -1,2 +1,9 @@
 ---
 # tasks file for apache2
+- name: install apache2 using with_item module- all web components 
+  apt: name={{item}} state=present update_cache=yes
+  with_items:
+     - apache2
+     - libapache2-mod-wsgi
+     - python-pip
+    
