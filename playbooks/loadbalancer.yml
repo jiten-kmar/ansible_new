@@ -1,0 +1,7 @@
+---
+- hosts: ansible-lb
+  become: true
+  roles:
+     - nginx
+  
+   

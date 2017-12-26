@@ -1,0 +1,5 @@
+---
+- hosts: ansible-control
+  become: true
+  roles: 
+    - control

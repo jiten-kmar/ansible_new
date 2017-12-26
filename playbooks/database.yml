@@ -1,0 +1,5 @@
+--- 
+- hosts: ansible-db
+  become: true
+  roles:
+     - mysql
