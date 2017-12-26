@@ -1,2 +1,8 @@
 ---
 # tasks file for demo_app
+- name: install apache2 using with_item module- all web components 
+  apt: name={{item}} state=present update_cache=yes
+  with_items: 
+    - python-pip
+    - python-virtualenv
+    - python-mysqldb
