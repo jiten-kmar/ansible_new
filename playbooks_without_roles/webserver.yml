@@ -1,0 +1,36 @@
+--- 
+- hosts: ansible-webserver
+  become: true
+  tasks:
+    - name: install apache2 using with_item module- all web components 
+      apt: name={{item}} state=present update_cache=yes
+      with_items:
+         - apache2
+         - libapache2-mod-wsgi
+         - python-pip
+         - python-virtualenv
+         - python-mysqldb
+
+    - name: Ensure apache2 is started
+      service: name=apache2 state=started enabled=yes 
+
+    - name: Ensure mod_wsgi is enabled
+      apache2_module: state=present name=wsgi
+      notify: restart apache2
+
+    - name: copy demo application code
+      copy: src=/u01/ansible_project/ansible_new/demo/app/ dest=/var/www/demo mode=0755
+      notify: restart apache2
+
+    - name: copy apache virtual host config
+      copy: src=/u01/ansible_project/ansible_new/demo/demo.conf dest=/etc/apache2/sites-available mode=0755
+      notify: restart apache2
+
+    - name: setup pip virtualenv
+      pip: requirements=/var/www/demo/requirements.txt virtualenv=/var/www/demo/.venv
+      notify: restart apache2
+
+  handlers:
+    - name: restart apache2
+      service: name=apache2 state=restarted
+    
