@@ -15,3 +15,6 @@ ansible-playbook playbooks/hostname.yml
 
 URL for further study
 http://docs.ansible.com/ansible/latest/intro_patterns.html
+
+To get facts about environments
+ansible -m setup <hostname>
