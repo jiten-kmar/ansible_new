@@ -14,7 +14,8 @@
 
  - name: ensure mysql is runing on all ports
    lineinfile: dest=/etc/mysql/mariadb.conf.d/50-server.cnf regexp=^bind-address
-                 line="bind-address = 0.0.0.0"
+               line="bind-address = {{ ansible_eth0.ipv4.address }}"
+
    notify: restart mysql
 
 
